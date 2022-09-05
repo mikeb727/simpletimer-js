@@ -3,12 +3,16 @@
         {
             "name": "website-golive",
             "target": "2022-10-01 02:00:00Z",
+            "target-type": "absolute",
             "secondsPrecision": "0",
-            "type": "countdown",
-            "style": {
-                "background-color": "white",
-                "foreground-color": "black"
-            }
+            "type": "countdown"
+        },
+        {
+            "name": "countdown-relative",
+            "target": "300",
+            "target-type": "relative",
+            "secondsPrecision": "0",
+            "type": "countdown"
         },
         {
             "name": "someday",

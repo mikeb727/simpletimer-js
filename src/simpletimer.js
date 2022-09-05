@@ -78,6 +78,16 @@ function parseTimers(jsonPath){
         timers = JSON.parse(txt).timers;
         for (const t of timers){
             setMethods(t);
+            switch (t["target-type"]){
+                case "relative":
+                    t["target"] = new Date(Date.now() + (parseInt(t["target"]) * secondToMs));
+                    break;
+                case "absolute":
+                default:
+                    t["target"] = new Date(t["target"]);
+                    break;
+            }
+            if (t["target-type"] === "absolute")
             t["target"] = new Date(t["target"]);
             t.renderTimer();
             setInterval(() => {t.updateTimer()}, 10);
