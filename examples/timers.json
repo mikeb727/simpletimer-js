@@ -1,0 +1,19 @@
+{
+    "timers": [
+        {
+            "name": "website-golive",
+            "target": "2022-10-01 02:00:00Z",
+            "secondsPrecision": "0",
+            "type": "countdown",
+            "style": {
+                "background-color": "white",
+                "foreground-color": "black"
+            }
+        },
+        {
+            "name": "someday",
+            "target": "2022-09-13 12:22:21Z",
+            "secondsPrecision": "1"
+        }
+    ]
+}

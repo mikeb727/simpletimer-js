@@ -1,0 +1,27 @@
+* {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.timer-pad {
+  width: 20%;
+}
+
+.simpletimer {
+  margin: 0 auto;
+  display: flex;
+  width: 60%;
+  text-align: center;
+}
+
+.timer-sub {
+  width: 25%;
+  font-size: 5em;
+  font-weight: bold;
+}
+
+.timer-sub span {
+  font-size: 75%;
+  font-weight: normal;
+}
