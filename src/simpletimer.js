@@ -1,12 +1,15 @@
 /*
 
-simpletimer-js by mikeb
+simpletimer.js - a simple javascript timer
+copyright 2022 mikeb
+licensed under the GNU General Public License (GPL)
 
 */
 
 'use strict';
 
-/*  */
+/* usage: create HTML divs whose IDs start with "simpletimer-".
+   this script will attempt to create the timers within those divs. */
 const divPrefix = 'simpletimer';
 
 /* conversion constants */
@@ -15,13 +18,13 @@ const minuteToMs = 60 * secondToMs;
 const hourToMs   = 60 * minuteToMs;
 const dayToMs    = 24 * hourToMs;
 
-/* to be called after parsing the timer json */
+/* define methods for the timer objects after parsing from json */
 function setMethods(obj){
     obj.renderTimer = renderTimer;
     obj.updateTimer = updateTimer;
 }
 
-/* creates HTML for the timer */
+/* create the HTML elements for the timer */
 function renderTimer(){
     const timerFrag = new DocumentFragment();
     const timerRoot = document.createElement("div");
@@ -35,11 +38,11 @@ function renderTimer(){
     document.querySelector(`#${divPrefix}-${this.name}`).classList.add('timer');
 }
 
-/* updates the timer */
+/* update the timer's remaining time */
 function updateTimer(){
     // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
     const currentTime = new Date(Date.now());
-    this["remainingTime"] = this["targetStamp"] - currentTime;
+    this["remainingTime"] = this["target"] - currentTime;
     const daysRemaining = Math.floor(this["remainingTime"]/dayToMs);
     const hoursRemaining = Math.floor((this["remainingTime"] % dayToMs)/hourToMs);
     const minutesRemaining = Math.floor((this["remainingTime"] % hourToMs)/minuteToMs);
@@ -66,20 +69,23 @@ function updateTimer(){
     }
 };
 
-const timer3Req = new Request('timers.json');
-let timers = null;
-fetch(timer3Req).then((rsp) => {
-    if (!rsp.ok){
-        throw new Error('could not read json');
-    }
-    return rsp.text();
-}).then((txt) => {
-    timers = JSON.parse(txt);
-    for (const t of timers.timers){
-        t.targetStamp = new Date(t["target"]);
-        setMethods(t);
-        t.renderTimer();
-        setInterval(() => {t.updateTimer()}, 10);
-    }
-})
+/* extract a set of timers from a json file */
+function parseTimers(jsonPath){
+    let timers = null;
+    fetch(new Request(jsonPath)).then((rsp) => {
+        if (rsp.status !== 200){
+            throw new Error(`error reading "${jsonPath}"`);
+        }
+        return rsp.text();
+    }).then((txt, timers) => {
+        timers = JSON.parse(txt).timers;
+        for (const t of timers){
+            setMethods(t);
+            t["target"] = new Date(t["target"]);
+            t.renderTimer();
+            setInterval(() => {t.updateTimer()}, 10);
+        }
+    })
+}
 
+parseTimers('timers.json');
