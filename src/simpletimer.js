@@ -6,12 +6,16 @@ simpletimer-js by mikeb
 
 'use strict';
 
+/*  */
+const divPrefix = 'simpletimer';
+
 /* conversion constants */
 const secondToMs = 1000;
 const minuteToMs = 60 * secondToMs;
 const hourToMs   = 60 * minuteToMs;
 const dayToMs    = 24 * hourToMs;
 
+/* to be called after parsing the timer json */
 function setMethods(obj){
     obj.renderTimer = renderTimer;
     obj.updateTimer = updateTimer;
@@ -20,31 +24,28 @@ function setMethods(obj){
 /* creates HTML for the timer */
 function renderTimer(){
     const timerFrag = new DocumentFragment();
-    const leftPad = document.createElement("div"); leftPad.classList.add('timer-pad');
-    const rightPad = document.createElement("div"); rightPad.classList.add('timer-pad');
     const timerRoot = document.createElement("div");
-    ['d', 'h', 'm', 's'].forEach((unit) => {
+    ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
-        div.classList.add('timer-sub', unit);
+        div.classList.add('timer-sub', timeUnit);
         timerRoot.appendChild(div);
     });
-    [leftPad, timerRoot, rightPad].forEach((div) => {
-        timerFrag.appendChild(div);
-    });
-    document.querySelector(`#${this.name}`).classList.add('timer');
-    document.querySelector(`#${this.name}`).appendChild(timerFrag);
+    timerFrag.appendChild(timerRoot);
+    document.querySelector(`#${divPrefix}-${this.name}`).appendChild(timerFrag);
+    document.querySelector(`#${divPrefix}-${this.name}`).classList.add('timer');
 }
 
 /* updates the timer */
 function updateTimer(){
-    console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
+    // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
     const currentTime = new Date(Date.now());
     this["remainingTime"] = this["targetStamp"] - currentTime;
     const daysRemaining = Math.floor(this["remainingTime"]/dayToMs);
     const hoursRemaining = Math.floor((this["remainingTime"] % dayToMs)/hourToMs);
     const minutesRemaining = Math.floor((this["remainingTime"] % hourToMs)/minuteToMs);
-    const secondsRemaining = (Math.floor((this["remainingTime"] % minuteToMs)/secondToMs*Math.pow(10, this["secondsPrecision"]))/Math.pow(10, this["secondsPrecision"])).toFixed(this["secondsPrecision"]);
-    const timerRoot = document.querySelector(`#${this.name}`);
+    const prec = ("secondsPrecision" in this) ? this["secondsPrecision"] : 0;
+    const secondsRemaining = (Math.floor((this["remainingTime"] % minuteToMs)/secondToMs*Math.pow(10, prec))/Math.pow(10, prec)).toFixed(prec);
+    const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
 
     timerRoot.querySelector('.timer-sub.d').innerHTML = daysRemaining + '<span>d</span>';
     timerRoot.querySelector('.timer-sub.h').innerHTML = hoursRemaining + '<span>h</span>';
@@ -72,8 +73,8 @@ fetch(timer3Req).then((rsp) => {
         throw new Error('could not read json');
     }
     return rsp.text();
-}).then((rsp) => {
-    timers = JSON.parse(rsp);
+}).then((txt) => {
+    timers = JSON.parse(txt);
     for (const t of timers.timers){
         t.targetStamp = new Date(t["target"]);
         setMethods(t);
