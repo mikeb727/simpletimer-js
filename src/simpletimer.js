@@ -22,6 +22,7 @@ const dayToMs    = 24 * hourToMs;
 function setMethods(obj){
     obj.renderTimer = renderTimer;
     obj.updateTimer = updateTimer;
+    obj.updateTimerFields = updateTimerFields;
 }
 
 /* create the HTML elements for the timer */
@@ -35,40 +36,44 @@ function renderTimer(){
     });
 }
 
-/* update the timer's remaining time */
-function updateTimer(){
-    // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
-    const currentTime = new Date(Date.now());
-    switch (this["timer-type"]){
-        case "countup":
-            this["remainingTime"] = currentTime - this["target"];
-            break;
-        case "countdown":
-        default:
-            this["remainingTime"] = this["target"] - currentTime;
-            break;
-    }
-    
-    const daysRemaining = Math.floor(this["remainingTime"]/dayToMs);
-    const hoursRemaining = Math.floor((this["remainingTime"] % dayToMs)/hourToMs);
-    const minutesRemaining = Math.floor((this["remainingTime"] % hourToMs)/minuteToMs);
+function updateTimerFields(t){
+    const daysRemaining = Math.floor(t/dayToMs);
+    const hoursRemaining = Math.floor((t % dayToMs)/hourToMs);
+    const minutesRemaining = Math.floor((t % hourToMs)/minuteToMs);
     const prec = ("secondsPrecision" in this) ? this["secondsPrecision"] : 0;
-    const secondsRemaining = (Math.floor((this["remainingTime"] % minuteToMs)/secondToMs*Math.pow(10, prec))/Math.pow(10, prec)).toFixed(prec);
+    const secondsRemaining = (Math.floor((t % minuteToMs)/secondToMs*Math.pow(10, prec))/Math.pow(10, prec)).toFixed(prec);
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
 
     timerRoot.querySelector('.timer-sub.d').innerHTML = daysRemaining + '<span>d</span>';
     timerRoot.querySelector('.timer-sub.h').innerHTML = hoursRemaining + '<span>h</span>';
     timerRoot.querySelector('.timer-sub.m').innerHTML = minutesRemaining + '<span>m</span>';
     timerRoot.querySelector('.timer-sub.s').innerHTML = secondsRemaining + '<span>s</span>';
+}
 
-    if (this["remainingTime"] <= 0){
-        this["remainingTime"] = 0;
-        timerRoot.querySelector('.timer-sub.d').innerHTML = 0 + '<span>d</span>';
-        timerRoot.querySelector('.timer-sub.h').innerHTML = 0 + '<span>h</span>';
-        timerRoot.querySelector('.timer-sub.m').innerHTML = 0  + '<span>m</span>';
-        timerRoot.querySelector('.timer-sub.s').innerHTML = 0 + '<span>s</span>';    
-        clearInterval(this["updId"]);
+/* update the timer's remaining time */
+function updateTimer(){
+    // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
+    const currentTime = new Date(Date.now());
+    switch (this["timer-type"]){
+        case "countup":
+            this["remainingTime"] = currentTime - this["start"];
+            if (this["remainingTime"] >= this["target"]){
+                this.updateTimerFields(this["remainingTime"]);
+                clearInterval(this["updIntvId"]);
+            }
+            break;
+        case "countdown":
+        default:
+            this["remainingTime"] = this["target"] - currentTime;
+            if (this["remainingTime"] <= 0){
+                this["remainingTime"] = 0;
+                this.updateTimerFields(this["remainingTime"]);
+                clearInterval(this["updIntvId"]);
+            }
+            break;
     }
+
+    this.updateTimerFields(this["remainingTime"]);
 
     // if (daysRemaining === 0){
     //     timerRoot.querySelector('.timer-sub.d').style.visibility = 'hidden';
@@ -98,7 +103,8 @@ function parseTimers(jsonPath){
             setMethods(t);
             switch (t["timer-type"]){
                 case "countup":
-                    t["target"] = new Date(Date.now());
+                    t["start"] = new Date(Date.now());
+                    t["target"] = ("target" in t) ? (parseInt(t["target"]) * secondToMs): Infinity;
                     break;
                 case "countdown":
                 default:
@@ -113,7 +119,7 @@ function parseTimers(jsonPath){
                     }
             }
             t.renderTimer();
-            t["updId"] = setInterval(() => {t.updateTimer()}, 10);
+            t["updIntvId"] = setInterval(() => {t.updateTimer()}, 10);
         }
     })
 }

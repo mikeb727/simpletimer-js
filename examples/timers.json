@@ -2,22 +2,32 @@
     "timers": [
         {
             "name": "website-golive",
+            "timer-type": "countdown",
             "target": "2022-10-01 02:00:00Z",
             "target-type": "absolute",
-            "secondsPrecision": "0",
-            "type": "countdown"
+            "secondsPrecision": "0"
         },
         {
-            "name": "countdown-relative",
-            "target": "300",
+            "name": "example-minimal",
+            "target": "2022-09-07 16:22:21Z"
+        },
+        {
+            "name": "example-countdown-relative",
+            "timer-type": "countdown",
+            "target": "60",
             "target-type": "relative",
-            "secondsPrecision": "1",
-            "timer-type": "countdown"
+            "secondsPrecision": "1"
         },
         {
-            "name": "countup",
-            "secondsPrecision": "1",
-            "timer-type": "countup"
+            "name": "example-countup-unbounded",
+            "timer-type": "countup",
+            "secondsPrecision": "0"
+        },
+        {
+            "name": "example-countup-bounded",
+            "timer-type": "countup",
+            "target": "50",
+            "secondsPrecision": "0"
         },
         {
             "name": "someday",
