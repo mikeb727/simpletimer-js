@@ -48,6 +48,7 @@ function updateTimer(){
             this["remainingTime"] = this["target"] - currentTime;
             break;
     }
+    
     const daysRemaining = Math.floor(this["remainingTime"]/dayToMs);
     const hoursRemaining = Math.floor((this["remainingTime"] % dayToMs)/hourToMs);
     const minutesRemaining = Math.floor((this["remainingTime"] % hourToMs)/minuteToMs);
@@ -59,6 +60,15 @@ function updateTimer(){
     timerRoot.querySelector('.timer-sub.h').innerHTML = hoursRemaining + '<span>h</span>';
     timerRoot.querySelector('.timer-sub.m').innerHTML = minutesRemaining + '<span>m</span>';
     timerRoot.querySelector('.timer-sub.s').innerHTML = secondsRemaining + '<span>s</span>';
+
+    if (this["remainingTime"] <= 0){
+        this["remainingTime"] = 0;
+        timerRoot.querySelector('.timer-sub.d').innerHTML = 0 + '<span>d</span>';
+        timerRoot.querySelector('.timer-sub.h').innerHTML = 0 + '<span>h</span>';
+        timerRoot.querySelector('.timer-sub.m').innerHTML = 0  + '<span>m</span>';
+        timerRoot.querySelector('.timer-sub.s').innerHTML = 0 + '<span>s</span>';    
+        clearInterval(this["updId"]);
+    }
 
     // if (daysRemaining === 0){
     //     timerRoot.querySelector('.timer-sub.d').style.visibility = 'hidden';
@@ -103,7 +113,7 @@ function parseTimers(jsonPath){
                     }
             }
             t.renderTimer();
-            setInterval(() => {t.updateTimer()}, 10);
+            t["updId"] = setInterval(() => {t.updateTimer()}, 10);
         }
     })
 }
