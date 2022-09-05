@@ -26,16 +26,13 @@ function setMethods(obj){
 
 /* create the HTML elements for the timer */
 function renderTimer(){
-    const timerFrag = new DocumentFragment();
-    const timerRoot = document.createElement("div");
+    const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
+    timerRoot.classList.add('simpletimer');
     ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
         div.classList.add('timer-sub', timeUnit);
         timerRoot.appendChild(div);
     });
-    timerFrag.appendChild(timerRoot);
-    document.querySelector(`#${divPrefix}-${this.name}`).appendChild(timerFrag);
-    document.querySelector(`#${divPrefix}-${this.name}`).classList.add('timer');
 }
 
 /* update the timer's remaining time */
@@ -67,7 +64,7 @@ function updateTimer(){
             }
         }
     }
-};
+}
 
 /* extract a set of timers from a json file */
 function parseTimers(jsonPath){
