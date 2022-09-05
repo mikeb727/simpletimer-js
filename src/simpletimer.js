@@ -39,7 +39,15 @@ function renderTimer(){
 function updateTimer(){
     // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
     const currentTime = new Date(Date.now());
-    this["remainingTime"] = this["target"] - currentTime;
+    switch (this["timer-type"]){
+        case "countup":
+            this["remainingTime"] = currentTime - this["target"];
+            break;
+        case "countdown":
+        default:
+            this["remainingTime"] = this["target"] - currentTime;
+            break;
+    }
     const daysRemaining = Math.floor(this["remainingTime"]/dayToMs);
     const hoursRemaining = Math.floor((this["remainingTime"] % dayToMs)/hourToMs);
     const minutesRemaining = Math.floor((this["remainingTime"] % hourToMs)/minuteToMs);
@@ -52,18 +60,18 @@ function updateTimer(){
     timerRoot.querySelector('.timer-sub.m').innerHTML = minutesRemaining + '<span>m</span>';
     timerRoot.querySelector('.timer-sub.s').innerHTML = secondsRemaining + '<span>s</span>';
 
-    if (daysRemaining === 0){
-        timerRoot.querySelector('.timer-sub.d').style.visibility = 'hidden';
-        if (hoursRemaining === 0){
-            timerRoot.querySelector('.timer-sub.h').style.visibility = 'hidden';
-            if (minutesRemaining === 0){
-                timerRoot.querySelector('.timer-sub.m').style.visibility = 'hidden';
-                if (secondsRemaining === 0){
-                    timerRoot.querySelector('.timer-sub.s').style.visibility = 'hidden';
-                }
-            }
-        }
-    }
+    // if (daysRemaining === 0){
+    //     timerRoot.querySelector('.timer-sub.d').style.visibility = 'hidden';
+    //     if (hoursRemaining === 0){
+    //         timerRoot.querySelector('.timer-sub.h').style.visibility = 'hidden';
+    //         if (minutesRemaining === 0){
+    //             timerRoot.querySelector('.timer-sub.m').style.visibility = 'hidden';
+    //             if (secondsRemaining === 0){
+    //                 timerRoot.querySelector('.timer-sub.s').style.visibility = 'hidden';
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 /* extract a set of timers from a json file */
@@ -78,17 +86,22 @@ function parseTimers(jsonPath){
         timers = JSON.parse(txt).timers;
         for (const t of timers){
             setMethods(t);
-            switch (t["target-type"]){
-                case "relative":
-                    t["target"] = new Date(Date.now() + (parseInt(t["target"]) * secondToMs));
+            switch (t["timer-type"]){
+                case "countup":
+                    t["target"] = new Date(Date.now());
                     break;
-                case "absolute":
+                case "countdown":
                 default:
-                    t["target"] = new Date(t["target"]);
-                    break;
+                    switch (t["target-type"]){
+                        case "relative":
+                            t["target"] = new Date(Date.now() + (parseInt(t["target"]) * secondToMs));
+                            break;
+                        case "absolute":
+                        default:
+                            t["target"] = new Date(t["target"]);
+                            break;                
+                    }
             }
-            if (t["target-type"] === "absolute")
-            t["target"] = new Date(t["target"]);
             t.renderTimer();
             setInterval(() => {t.updateTimer()}, 10);
         }

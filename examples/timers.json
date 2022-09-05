@@ -11,8 +11,13 @@
             "name": "countdown-relative",
             "target": "300",
             "target-type": "relative",
-            "secondsPrecision": "0",
-            "type": "countdown"
+            "secondsPrecision": "1",
+            "timer-type": "countdown"
+        },
+        {
+            "name": "countup",
+            "secondsPrecision": "1",
+            "timer-type": "countup"
         },
         {
             "name": "someday",
