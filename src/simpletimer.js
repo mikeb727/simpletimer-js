@@ -87,5 +87,3 @@ function parseTimers(jsonPath){
         }
     })
 }
-
-parseTimers('timers.json');
