@@ -1,7 +1,12 @@
-* {
+body {
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
+}
+
+#simpletimer-example-countup-bounded {
+  background-color: white;
+  color: rebeccapurple;
 }
 
 .timer-pad {

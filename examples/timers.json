@@ -27,7 +27,7 @@
             "name": "example-countup-bounded",
             "timer-type": "countup",
             "target": "50",
-            "secondsPrecision": "0"
+            "secondsPrecision": "1"
         },
         {
             "name": "someday",
