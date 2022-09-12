@@ -19,13 +19,13 @@
             "secondsPrecision": "1"
         },
         {
-            "name": "example-countup-unbounded",
-            "timer-type": "countup",
+            "name": "example-stopwatch-unbounded",
+            "timer-type": "stopwatch",
             "secondsPrecision": "0"
         },
         {
-            "name": "example-countup-bounded",
-            "timer-type": "countup",
+            "name": "example-stopwatch-bounded",
+            "timer-type": "stopwatch",
             "target": "50",
             "secondsPrecision": "1"
         },
