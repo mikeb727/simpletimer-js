@@ -55,7 +55,7 @@ function updateTimer(){
     // console.log(`update ${this["name"]}, ${this["remainingTime"]}`)
     const currentTime = new Date(Date.now());
     switch (this["timer-type"]){
-        case "countup":
+        case "stopwatch":
             this["remainingTime"] = currentTime - this["start"];
             if (this["remainingTime"] >= this["target"]){
                 this.updateTimerFields(this["remainingTime"]);
@@ -102,7 +102,7 @@ function simpletimer_parse(jsonPath){
         for (const t of timers){
             setMethods(t);
             switch (t["timer-type"]){
-                case "countup":
+                case "stopwatch":
                     t["start"] = new Date(Date.now());
                     t["target"] = ("target" in t) ? (parseInt(t["target"]) * secondToMs): Infinity;
                     break;
