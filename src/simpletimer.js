@@ -29,6 +29,12 @@ function setMethods(obj){
 function renderTimer(){
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
     timerRoot.classList.add('simpletimer');
+    if ("annotation" in this){
+        const div = document.createElement("div");
+        div.classList.add('timer-annotation');
+        div.innerHTML = this["annotation"];
+        timerRoot.appendChild(div);
+    }
     ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
         div.classList.add('timer-sub', timeUnit);

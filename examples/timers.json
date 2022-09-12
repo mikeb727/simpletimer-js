@@ -5,7 +5,8 @@
             "timer-type": "countdown",
             "target": "2022-10-01 02:00:00Z",
             "target-type": "absolute",
-            "secondsPrecision": "0"
+            "secondsPrecision": "0",
+            "annotation": "my website goes live!"
         },
         {
             "name": "example-minimal",

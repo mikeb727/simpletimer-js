@@ -4,13 +4,18 @@ body {
   font-family: Arial, sans-serif;
 }
 
-#simpletimer-example-countup-bounded {
+#simpletimer-example-stopwatch-bounded {
   background-color: white;
   color: rebeccapurple;
 }
 
 .timer-pad {
   width: 20%;
+}
+
+.timer-annotation {
+  display: flex;
+  align-items: center;
 }
 
 .simpletimer {
