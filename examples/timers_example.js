@@ -1,1 +1,1 @@
-parseTimers('timers.json');
+simpletimer_parse('timers.json');

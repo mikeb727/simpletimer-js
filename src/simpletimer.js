@@ -90,7 +90,7 @@ function updateTimer(){
 }
 
 /* extract a set of timers from a json file */
-function parseTimers(jsonPath){
+function simpletimer_parse(jsonPath){
     let timers = null;
     fetch(new Request(jsonPath)).then((rsp) => {
         if (rsp.status !== 200){
