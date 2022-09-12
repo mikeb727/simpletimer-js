@@ -6,11 +6,18 @@
             "target": "2022-10-01 02:00:00Z",
             "target-type": "absolute",
             "secondsPrecision": "0",
-            "annotation": "my website goes live!"
+            "annotation": {
+                "text": "my website goes live!",
+                "position": "left"
+            }
         },
         {
             "name": "example-minimal",
-            "target": "2022-09-07 16:22:21Z"
+            "target": "2022-09-07 16:22:21Z",
+            "annotation": {
+                "text": "annotation on right",
+                "position": "right"
+            }
         },
         {
             "name": "example-countdown-relative",

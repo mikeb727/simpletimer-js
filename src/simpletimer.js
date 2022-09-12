@@ -29,17 +29,23 @@ function setMethods(obj){
 function renderTimer(){
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
     timerRoot.classList.add('simpletimer');
+    let annot;
     if ("annotation" in this){
-        const div = document.createElement("div");
-        div.classList.add('timer-annotation');
-        div.innerHTML = this["annotation"];
-        timerRoot.appendChild(div);
+        annot = document.createElement("div");
+        annot.classList.add('timer-annotation');
+        annot.innerHTML = this["annotation"]["text"];
+    }
+    if (annot && this["annotation"]["position"] === "left"){
+        timerRoot.appendChild(annot);
     }
     ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
         div.classList.add('timer-sub', timeUnit);
         timerRoot.appendChild(div);
     });
+    if (annot && this["annotation"]["position"] === "right"){
+        timerRoot.appendChild(annot);
+    }
 }
 
 function updateTimerFields(t){
