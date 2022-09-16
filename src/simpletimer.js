@@ -28,24 +28,23 @@ function setMethods(obj){
 /* create the HTML elements for the timer */
 function renderTimer(){
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
-    timerRoot.classList.add('simpletimer');
-    let annot;
-    if ("annotation" in this){
-        annot = document.createElement("div");
-        annot.classList.add('timer-annotation');
-        annot.innerHTML = this["annotation"]["text"];
+    if (this["classes"]){
+        this["classes"].forEach((cl) => {
+            timerRoot.classList.add(cl);
+        })
     }
-    if (annot && this["annotation"]["position"] === "left"){
-        timerRoot.appendChild(annot);
-    }
+    timerRoot.style.display = 'flex';
+    // create flex container under this (two if using an annotation)
+    const timerFrag = new DocumentFragment();
+    const timeUnits = document.createElement("div");
+    timeUnits.style.display = 'flex';
     ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
-        div.classList.add('timer-sub', timeUnit);
-        timerRoot.appendChild(div);
+        div.classList.add(`${divPrefix}-sub`, timeUnit);
+        timeUnits.appendChild(div);
     });
-    if (annot && this["annotation"]["position"] === "right"){
-        timerRoot.appendChild(annot);
-    }
+    timerFrag.appendChild(timeUnits);
+    timerRoot.appendChild(timerFrag);
 }
 
 function updateTimerFields(t){
@@ -56,10 +55,10 @@ function updateTimerFields(t){
     const secondsRemaining = (Math.floor((t % minuteToMs)/secondToMs*Math.pow(10, prec))/Math.pow(10, prec)).toFixed(prec);
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
 
-    timerRoot.querySelector('.timer-sub.d').innerHTML = daysRemaining + '<span>d</span>';
-    timerRoot.querySelector('.timer-sub.h').innerHTML = hoursRemaining + '<span>h</span>';
-    timerRoot.querySelector('.timer-sub.m').innerHTML = minutesRemaining + '<span>m</span>';
-    timerRoot.querySelector('.timer-sub.s').innerHTML = secondsRemaining + '<span>s</span>';
+    timerRoot.querySelector(`.${divPrefix}-sub.d`).innerHTML = daysRemaining + '<span>d</span>';
+    timerRoot.querySelector(`.${divPrefix}-sub.h`).innerHTML = hoursRemaining + '<span>h</span>';
+    timerRoot.querySelector(`.${divPrefix}-sub.m`).innerHTML = minutesRemaining + '<span>m</span>';
+    timerRoot.querySelector(`.${divPrefix}-sub.s`).innerHTML = secondsRemaining + '<span>s</span>';
 }
 
 /* update the timer's remaining time */

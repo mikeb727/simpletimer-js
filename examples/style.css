@@ -9,29 +9,23 @@ body {
   color: rebeccapurple;
 }
 
-.timer-pad {
-  width: 20%;
-}
-
-.timer-annotation {
-  display: flex;
-  align-items: center;
-}
-
-.simpletimer {
+.timer-style-1 {
   margin: 0 auto;
-  display: flex;
   width: 60%;
   text-align: center;
 }
 
-.timer-sub {
+.timer-style-1 > div {
+  width: 100%;
+}
+
+.timer-style-1 .simpletimer-sub {
   width: 25%;
   font-size: 5em;
   font-weight: bold;
 }
 
-.timer-sub span {
+.timer-style-1 .simpletimer-sub span {
   font-size: 75%;
   font-weight: normal;
 }

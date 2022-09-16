@@ -7,9 +7,9 @@
             "target-type": "absolute",
             "secondsPrecision": "0",
             "annotation": {
-                "text": "my website goes live!",
-                "position": "left"
-            }
+                "text": "my website launches!"
+            },
+            "classes": ["timer-style-1"]
         },
         {
             "name": "example-minimal",
