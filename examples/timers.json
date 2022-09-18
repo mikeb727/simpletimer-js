@@ -13,10 +13,11 @@
         },
         {
             "name": "example-minimal",
-            "target": "2022-09-07 16:22:21Z",
+            "timer-type": "countdown",
+            "target": "2022-09-19 16:22:21Z",
             "annotation": {
-                "text": "annotation on right",
-                "position": "right"
+                "text": "annotation on bottom",
+                "position": "bottom"
             }
         },
         {
@@ -24,7 +25,8 @@
             "timer-type": "countdown",
             "target": "60",
             "target-type": "relative",
-            "secondsPrecision": "1"
+            "secondsPrecision": "1",
+            "classes": ["timer-style-2"]
         },
         {
             "name": "example-stopwatch-unbounded",
@@ -39,6 +41,7 @@
         },
         {
             "name": "someday",
+            "timer-type": "countdown",
             "target": "2022-09-13 12:22:21Z",
             "secondsPrecision": "1"
         }

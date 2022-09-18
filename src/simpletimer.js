@@ -27,22 +27,37 @@ function setMethods(obj){
 
 /* create the HTML elements for the timer */
 function renderTimer(){
+    // find the root element in the document
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
+
+    // apply all specified classes from json
     if (this["classes"]){
         this["classes"].forEach((cl) => {
             timerRoot.classList.add(cl);
         })
     }
+    // we are prescribing the structural layout of the timer; user can still set colors, fonts, sizes, etc.
     timerRoot.style.display = 'flex';
-    // create flex container under this (two if using an annotation)
+
     const timerFrag = new DocumentFragment();
+
+    // days, hours, minutes, seconds go in a child flex container
     const timeUnits = document.createElement("div");
     timeUnits.style.display = 'flex';
+    timeUnits.style["user-select"] = 'none';
+
+    if (this["annotation"]){
+        const annot = document.createElement("div");
+        annot.classList.add(`${divPrefix}-annotation`);
+        annot.innerHTML = this["annotation"]["text"];
+        timerFrag.appendChild(annot);
+    }
     ['d', 'h', 'm', 's'].forEach((timeUnit) => {
         const div = document.createElement("div");
         div.classList.add(`${divPrefix}-sub`, timeUnit);
         timeUnits.appendChild(div);
     });
+
     timerFrag.appendChild(timeUnits);
     timerRoot.appendChild(timerFrag);
 }
@@ -51,7 +66,7 @@ function updateTimerFields(t){
     const daysRemaining = Math.floor(t/dayToMs);
     const hoursRemaining = Math.floor((t % dayToMs)/hourToMs);
     const minutesRemaining = Math.floor((t % hourToMs)/minuteToMs);
-    const prec = ("secondsPrecision" in this) ? this["secondsPrecision"] : 0;
+    const prec = (this["secondsPrecision"]) ? this["secondsPrecision"] : 0;
     const secondsRemaining = (Math.floor((t % minuteToMs)/secondToMs*Math.pow(10, prec))/Math.pow(10, prec)).toFixed(prec);
     const timerRoot = document.querySelector(`#${divPrefix}-${this.name}`);
 
@@ -69,6 +84,7 @@ function updateTimer(){
         case "stopwatch":
             this["remainingTime"] = currentTime - this["start"];
             if (this["remainingTime"] >= this["target"]){
+                this["remainingTime"] = this["target"];
                 this.updateTimerFields(this["remainingTime"]);
                 clearInterval(this["updIntvId"]);
             }
@@ -112,13 +128,13 @@ function simpletimer_parse(jsonPath){
         timers = JSON.parse(txt).timers;
         for (const t of timers){
             setMethods(t);
+            if (!t["timer-type"]) throw new Error("no timer type specified.");
             switch (t["timer-type"]){
                 case "stopwatch":
                     t["start"] = new Date(Date.now());
                     t["target"] = ("target" in t) ? (parseInt(t["target"]) * secondToMs): Infinity;
                     break;
                 case "countdown":
-                default:
                     switch (t["target-type"]){
                         case "relative":
                             t["target"] = new Date(Date.now() + (parseInt(t["target"]) * secondToMs));

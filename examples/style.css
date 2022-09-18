@@ -9,10 +9,49 @@ body {
   color: rebeccapurple;
 }
 
+#simpletimer-example-minimal {
+  text-align: center;
+  border: 1px dashed white;
+  width: 200px;
+}
+
+#simpletimer-example-minimal > div {
+  width: 100%;
+}
+
+#simpletimer-example-minimal > div div {
+  width: 25%;
+}
+
+.timer-style-2 {
+  width: 300px;
+  text-align: center;
+}
+
+.timer-style-2 > div {
+  width: 100%;
+}
+
+.timer-style-2 .simpletimer-sub {
+  width: 25%;
+  font-size: 2em;
+}
+
+.timer-style-2 .simpletimer-sub span {
+  font-size: 50%;
+}
+
 .timer-style-1 {
   margin: 0 auto;
   width: 60%;
   text-align: center;
+  border: 4px solid green;
+  padding: 4px;
+  flex-direction: column;
+}
+
+.timer-style-1 .simpletimer-annotation {
+  font-size: 1.5em;
 }
 
 .timer-style-1 > div {
