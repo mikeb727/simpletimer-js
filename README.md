@@ -49,4 +49,35 @@ Create empty <code>\<div></code> elements in the document where the <code>id</co
     <div id="simpletimer-timer1"></div>
 
 ### CSS
-**simpletimer-js** is designed to apply minimal layout styling to the timer and provide predictable CSS class names for its elements, which the user can build upon with additional stylesheets.
+**simpletimer-js** is designed to apply minimal layout styling to the timer and provide predictable CSS class names for its elements, which the user can build upon with additional stylesheets. Each timer generated has the same basic structure:
+
+    <div id="simpletimer-example" style="display: flex;">
+        <div class="simpletimer-internal-annotation">
+            This is a timer.
+        </div>
+        <div style="display: flex; user-select: none">
+            <div class="simpletimer-internal-sub d>
+                0<span>d</span>
+            </div> 
+            <div class="simpletimer-internal-sub h>
+                0<span>h</span>
+            </div>
+            <div class="simpletimer-internal-sub m>
+                0<span>m</span>
+            </div>
+            <div class="simpletimer-internal-sub s>
+                0<span>s</span>
+            </div>   
+    </div>
+    
+By default, the timer root element is a flexbox containing an optional annotation <code>\<div></code> and another flexbox for the time units.
+
+### Useful selectors
+ - <code>#simpletimer-my-id</code>: individual timer root
+ - <code>.simpletimer-my-class</code>: root for timer with class (can apply to multiple timers)
+ - <code>[root selector] .simpletimer-internal-annotation</code>: timer annotation
+ - <code>[root selector] > div</code>: time unit flexbox (days, hours, minutes, seconds) within timer
+ - <code>[root selector] .simpletimer-internal-sub span</code>: time unit labels
+
+### Examples
+ - Annotation position: annotations by default appear to the left of the timer. Set the <code>flex-direction</code> for <code>#simpletimer-example > div</code> to change this. Column flex places the annotation on top; column-reverse places it on the bottom. 
