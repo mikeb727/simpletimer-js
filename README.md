@@ -14,7 +14,8 @@ Create a JSON file defining the timer properties. It should resemble the followi
                 "timer-type": "countdown",
                 "target": "2023-01-01 00:00:00Z"
                 "target-type": "absolute",
-                "annotation": "Happy New Year!"
+                "annotation": "Happy New Year!",
+                "annotation-position": "top"
             },
             {
                 "name": "timer2",
@@ -34,6 +35,7 @@ The root element name must be "timers" and contain an array of objects, each of 
 | target | Mandatory for countdowns, optional for stopwatches. | Time at which to stop counting. If target-type is absolute, this should be a date-time string, and if it is relative, it should be a time period in seconds. This property can be omitted for stopwatches, in which case the timer will continue unbounded infinitely. | date string or time period in seconds |
 | secondsPrecision | No | Number of decimal places to display seconds. If not specified, zero is used. | any non-negative integer |
 | annotation | No | Text to be displayed alongside the timer. | any string |
+| annotation-position | No | Position of the annotation relative to the timer. | "top", "bottom", "left", "right" |
 | classes | No | List of CSS classes to be assigned to the timer. | array of strings |
 
 ### HTML
@@ -80,4 +82,3 @@ By default, the timer root element is a flexbox containing an optional annotatio
  - <code>[root selector] .simpletimer-internal-sub span</code>: time unit labels
 
 ### Examples
- - Annotation position: annotations by default appear to the left of the timer. Set the <code>flex-direction</code> for <code>#simpletimer-example > div</code> to change this. Column flex places the annotation on top; column-reverse places it on the bottom. 
