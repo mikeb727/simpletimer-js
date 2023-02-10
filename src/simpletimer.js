@@ -117,18 +117,6 @@ function updateTimer(){
 
     this.updateTimerFields(this["remainingTime"]);
 
-    // if (daysRemaining === 0){
-    //     timerRoot.querySelector('.timer-sub.d').style.visibility = 'hidden';
-    //     if (hoursRemaining === 0){
-    //         timerRoot.querySelector('.timer-sub.h').style.visibility = 'hidden';
-    //         if (minutesRemaining === 0){
-    //             timerRoot.querySelector('.timer-sub.m').style.visibility = 'hidden';
-    //             if (secondsRemaining === 0){
-    //                 timerRoot.querySelector('.timer-sub.s').style.visibility = 'hidden';
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 /* extract a set of timers from a json file */

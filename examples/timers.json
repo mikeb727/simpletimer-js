@@ -1,24 +1,19 @@
 {
     "timers": [
         {
-            "name": "website-golive",
+            "name": "example-centered",
             "timer-type": "countdown",
-            "target": "2022-10-01 02:00:00Z",
+            "target": "2023-03-01 02:00:00Z",
             "target-type": "absolute",
             "secondsPrecision": "0",
-            "annotation": {
-                "text": "my website launches!"
-            },
+            "annotation": "a centered timer",
             "classes": ["timer-style-1"]
         },
         {
             "name": "example-minimal",
             "timer-type": "countdown",
-            "target": "2022-09-19 16:22:21Z",
-            "annotation": {
-                "text": "annotation on bottom",
-                "position": "bottom"
-            }
+            "target": "2022-09-30 19:22:21",
+            "classes": ["fixed-width-timer"]
         },
         {
             "name": "example-countdown-relative",
@@ -26,24 +21,34 @@
             "target": "60",
             "target-type": "relative",
             "secondsPrecision": "1",
-            "classes": ["timer-style-2"]
+            "classes": ["timer-style-2"],
+            "annotation": "fifty-second countdown with deciseconds",
+            "annotation-position": "top"
         },
         {
             "name": "example-stopwatch-unbounded",
             "timer-type": "stopwatch",
-            "secondsPrecision": "0"
+            "secondsPrecision": "0",
+            "classes": ["fixed-width-timer"],
+            "annotation": "unlimited stopwatch",
+            "annotation-position": "bottom"
         },
         {
             "name": "example-stopwatch-bounded",
             "timer-type": "stopwatch",
             "target": "50",
-            "secondsPrecision": "1"
+            "secondsPrecision": "1",
+            "classes": ["fixed-width-timer"],
+            "annotation": "custom colors and label on right",
+            "annotation-position": "right"
         },
         {
             "name": "someday",
             "timer-type": "countdown",
             "target": "2022-09-13 12:22:21Z",
-            "secondsPrecision": "1"
+            "secondsPrecision": "1",
+            "annotation": "annotation on bottom",
+            "annotation-position": "bottom"
         }
     ]
 }

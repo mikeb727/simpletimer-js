@@ -1,7 +1,37 @@
 body {
-  background-color: black;
+  background-color: #151515;
   color: white;
   font-family: Arial, sans-serif;
+}
+
+.timer-box {
+  margin: 20px auto;
+  border: 1px solid white;
+  height: 240px;
+  width: 840px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 40px;
+}
+
+/* force all timers to have smaller annotations unless overridden */
+.simpletimer-internal-annotation {
+  font-size: 10%;
+}
+
+#simpletimer-example-minimal {
+  text-align: center;
+  border: 1px dashed white;
+}
+
+#simpletimer-example-minimal * {
+  width: 100%;
+}
+
+#simpletimer-example-stopwatch-unbounded {
+  font-size: 3em;
 }
 
 #simpletimer-example-stopwatch-bounded {
@@ -9,18 +39,12 @@ body {
   color: rebeccapurple;
 }
 
-#simpletimer-example-minimal {
-  text-align: center;
-  border: 1px dashed white;
-  width: 200px;
+#simpletimer-example-stopwatch-bounded > div{
+  padding: 0px 16px;
 }
 
-#simpletimer-example-minimal > div {
-  width: 100%;
-}
-
-#simpletimer-example-minimal > div div {
-  width: 25%;
+.fixed-width-timer {
+  width: 350px;
 }
 
 .timer-style-2 {
@@ -28,16 +52,17 @@ body {
   text-align: center;
 }
 
-.timer-style-2 > div {
+.timer-style-2 * {
   width: 100%;
+  font-size: 28pt;
 }
 
-.timer-style-2 .simpletimer-sub {
-  width: 25%;
-  font-size: 2em;
+/* why don't percentages work here (aside from 0, 50, 100)? */
+.timer-style-2 .simpletimer-internal-annotation {
+  font-size: 10%;
 }
 
-.timer-style-2 .simpletimer-sub span {
+.timer-style-2 .simpletimer-internal-sub span {
   font-size: 50%;
 }
 
@@ -45,12 +70,13 @@ body {
   margin: 0 auto;
   width: 60%;
   text-align: center;
-  border: 4px solid green;
+  border: 8px solid green;
+  border-radius: 8px;
   padding: 4px;
   flex-direction: column;
 }
 
-.timer-style-1 .simpletimer-annotation {
+.timer-style-1 .simpletimer-internal-annotation {
   font-size: 1.5em;
 }
 
@@ -58,13 +84,13 @@ body {
   width: 100%;
 }
 
-.timer-style-1 .simpletimer-sub {
+.timer-style-1 .simpletimer-internal-sub {
   width: 25%;
   font-size: 5em;
   font-weight: bold;
 }
 
-.timer-style-1 .simpletimer-sub span {
+.timer-style-1 .simpletimer-internal-sub span {
   font-size: 75%;
   font-weight: normal;
 }
